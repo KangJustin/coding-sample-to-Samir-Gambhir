@@ -1,9 +1,18 @@
 import pandas as pd
 
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 df = pd.read_csv('Median Income by County in California - Cleaned.csv')
 
+sort_values = df["Median Income"].replace(',', '', regex=True).astype(int)
 df_sorted = df.sort_values("Median Income", ascending=False)
-top_10_counties = df_sorted.head(10)
-top_10_counties
+top_10 = df_sorted.head(10)
+
+plt.figure(figsize=(10, 6))
+plt.barh(top_10["County Name"], top_10["Median Income"], color='skyblue')
+plt.xlabel("Median Household Income ($)")
+plt.title("Top 10 CA Counties by Median Household Income (2023)")
+plt.gca().invert_yaxis()  # Highest at top
+plt.tight_layout()
+plt.show()
+# This code reads a CSV file containing median income data for counties in California, cleans the data by removing commas from the income values, converts them to integers, sorts the counties by median income, and then visualizes the top 10 counties using a horizontal bar chart.
